@@ -1,0 +1,164 @@
+<div class="buscador-conatiner">
+
+  <div class="options">
+
+    <button nz-button nzType="primary" (click)="showModal()">Nuevo usuario</button>
+
+    <div>
+      <label for="">Sede: </label>
+      <nz-select [(ngModel)]="currentSede" (ngModelChange)="changeSede()" style="min-width: 150px ;">
+        <nz-option *ngFor="let sede of sedes" [nzValue]="sede.idSede" [nzLabel]="sede.nombre"></nz-option>
+      </nz-select>
+    </div>
+
+  </div>
+
+  <div class="buscador">
+    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+      <input type="text" nz-input placeholder="busca por nombre" [(ngModel)]="campoBuscar" />
+    </nz-input-group>
+    <ng-template #suffixIconButton>
+      <button nz-button nzType="primary" nzSearch (click)="getUsuariosFilter()"><span nz-icon
+          nzType="search"></span></button>
+    </ng-template>
+  </div>
+</div>
+
+
+<nz-table #basicTable [nzData]="listOfData" [nzScroll]="{ x: '240px' }">
+  <thead>
+    <tr>
+      <th>Cedula</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Correo</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data" (click)="clickUser(data)">
+      <td>{{ data.idUsuario }}</td>
+      <td>{{ data.nombre }}</td>
+      <td>{{ data.apellido }}</td>
+      <td>{{ data.correo }}</td>
+      <td>
+        <a class="action" (click)="deleteUser(data.idUsuario)">Eliminar</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a class="action">Editar</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a class="action" (click)="open(data)">Detalles</a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+
+
+
+<!-- <nz-modal [(nzVisible)]="isVisible" nzTitle="Agrega un nuevo usuario" (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+
+
+
+  <div class="cls-form" [formGroup]="formUser">
+    <div>
+      <label for="">Nombre</label>
+      <input type="text" formControlName="nombre" />
+    </div>
+    <div>
+      <label for="">Teléfono</label>
+      <input type="tel" formControlName="telefono" />
+    </div>
+    <div>
+      <label for="">Fecha nacimiento</label>
+      <input type="date" formControlName="fechaNacimiento" />
+    </div>
+    <div>
+      <label for="">Contraseña</label>
+      <input type="password" formControlName="contrasenia" />
+    </div>
+
+    <button (click)="saveUser()" style="height: 28px">Agregar</button>
+  </div>
+
+
+
+  </ng-container>
+</nz-modal> -->
+
+
+<!-- Modal -->
+
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
+  (nzOnCancel)="handleCancel()">
+  <ng-template #modalTitle>Agregar un usuario</ng-template>
+
+  <ng-template #modalContent>
+
+    <div class="cls-form" [formGroup]="formUser">
+
+      <div>
+        <label for="">Cedúla</label>
+        <input type="text" formControlName="idUsuario" />
+      </div>
+
+      <div>
+        <label for="">Nombre</label>
+        <input type="text" formControlName="nombre" />
+      </div>
+
+      <div>
+        <label for="">Apellido</label>
+        <input type="text" formControlName="apellido" />
+      </div>
+
+      <div>
+        <label for="">Teléfono</label>
+        <input type="tel" formControlName="telefono" />
+      </div>
+
+      <div>
+        <label for="">Correo</label>
+        <input type="tel" formControlName="correo" autocomplete="off" />
+      </div>
+
+      <div>
+        <label for="">Fecha nacimiento</label>
+        <input type="date" name="" id="" formControlName="fechaNacimiento">
+      </div>
+
+      <div>
+        <label for="">Contraseña</label>
+        <input type="password" formControlName="contrasenia" autocomplete="off" />
+      </div>
+
+    </div>
+
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <button nz-button nzType="default" (click)="handleCancel()">Cancelar</button>
+    <button nz-button nzType="primary" (click)="saveUser()" [nzLoading]="isConfirmLoading">Agregar</button>
+  </ng-template>
+</nz-modal>
+
+
+
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="visible"
+  nzPlacement="right"
+  nzTitle="Datos de usuario"
+  (nzOnClose)="close()"
+>
+  <ng-container *nzDrawerContent>
+    <p>Cedula: {{userCurrent.idUsuario}}</p>
+    <p>Nombre: {{ userCurrent.nombre }}</p>
+    <p>Apellido: {{ userCurrent.apellido}} </p>
+    <p>Teléfono: {{ userCurrent.telefono}} </p>
+    <p>Correo: {{ userCurrent.correo}} </p>
+    <p>Ciudad: {{ userCurrent.ciudad}} </p>
+    <p>Rol: {{ userCurrent.rolUsuarioId }} </p>
+
+  </ng-container>
+</nz-drawer>

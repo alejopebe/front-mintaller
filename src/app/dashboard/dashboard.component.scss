@@ -1,0 +1,33 @@
+
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+    flex-wrap: wrap;
+    row-gap: 2em;
+    
+}
+
+.card{
+    border-radius: 10px;
+    padding: 0.8em;
+    min-width: 20rem;
+    height: 10rem;
+    background-color: #001529;
+
+}
+.crd-titulo{
+    color: white;
+    font-size: 20px;
+}
+.crd-total{
+    color: white;
+    font-size: 60px;
+}
+
+@media screen and (max-width: 768px) {
+    .container{
+        justify-content: center;
+    }
+}

@@ -1,0 +1,39 @@
+<div class="buscador-conatiner">
+
+  <div>
+    <!-- <button nz-button nzType="primary" (click)="showModal()" >Nuevo usuario</button> -->
+  </div>
+
+  <div class="buscador">
+    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+      <input type="text" nz-input placeholder="busca por nombre" />
+    </nz-input-group>
+    <ng-template #suffixIconButton>
+      <button nz-button nzType="primary" nzSearch><span nz-icon nzType="search"></span></button>
+    </ng-template>
+  </div>
+</div>
+
+   <nz-table #basicTable [nzData]="listOfData">
+      <thead>
+        <tr>
+          <th>Placa</th>
+          <th>Marca</th>
+          <th>Modelo</th>
+          <th>Cilindraje</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td>{{ data.idVehiculo }}</td>
+          <td>{{ data.marca }}</td>
+          <td>{{ data.modelo }}</td>
+          <td>
+            <a>Action 一 {{ data.marca }}</a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a>Delete</a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  
