@@ -27,14 +27,19 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 
 
 
 import { LayoutComponent } from './layout/layout.component';
-import { CrudUsuariosComponent } from './crud-usuarios/crud-usuarios.component';
-import { CrudVehiculosComponent } from './crud-vehiculos/crud-vehiculos.component';
+
+import { CrudUsuariosComponent } from './layout/crud-usuarios/crud-usuarios.component';
+import { CrudVehiculosComponent } from './layout/crud-vehiculos/crud-vehiculos.component';
 import { LoginComponent } from './auth/login/login.component';
-import { PagesComponent } from './pages/pages.component';
+import { PagesComponent } from './pages/jefe-operaciones/pages.component';
+import { UsuarioComponent } from './pages/usuario/usuario.component';
+import { UserLayoutComponent } from './layout-usuario/user-layout.component';
 
 registerLocaleData(es);
 
@@ -42,10 +47,13 @@ registerLocaleData(es);
   declarations: [
     AppComponent,
     LayoutComponent,
+    UserLayoutComponent,
     CrudUsuariosComponent,
     CrudVehiculosComponent,
     PagesComponent,
-    LoginComponent
+    UsuarioComponent,
+    LoginComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -68,7 +76,9 @@ registerLocaleData(es);
     NzCheckboxModule,
     NzSelectModule,
     NzSpaceModule,
-    NzDrawerModule
+    NzDrawerModule,
+    NzToolTipModule,
+    NzAutocompleteModule
     
   ],
   providers: [

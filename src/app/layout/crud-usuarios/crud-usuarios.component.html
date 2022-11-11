@@ -11,21 +11,30 @@
       </nz-select>
     </div>
 
+    
+    <!-- <div>
+      <label for="">Rol: </label>
+      <nz-select [(ngModel)]="currentRol" (ngModelChange)="changeRol()" style="min-width: 150px ;">
+        <nz-option *ngFor="let rol of roles" [nzValue]="rol.idRol" [nzLabel]="rol.nombre"></nz-option>
+      </nz-select>
+    </div> -->
+
   </div>
 
   <div class="buscador">
     <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-      <input type="text" nz-input placeholder="busca por nombre" [(ngModel)]="campoBuscar" />
+      <input type="text" nz-input placeholder="Busca por nombre" [(ngModel)]="campoBuscar" />
     </nz-input-group>
     <ng-template #suffixIconButton>
-      <button nz-button nzType="primary" nzSearch (click)="getUsuariosFilter()"><span nz-icon
-          nzType="search"></span></button>
+      <button nz-button nzType="primary" nzSearch (click)="getUsuariosFilter()">
+        <span nz-icon nzType="search"></span>
+      </button>
     </ng-template>
   </div>
 </div>
 
 
-<nz-table #basicTable [nzData]="listOfData" [nzScroll]="{ x: '240px' }">
+<nz-table #basicTable [nzData]="listOfData" [nzPageSize]="6" [nzScroll]="{ x: '400px' }">
   <thead>
     <tr>
       <th>Cedula</th>
@@ -42,11 +51,17 @@
       <td>{{ data.apellido }}</td>
       <td>{{ data.correo }}</td>
       <td>
-        <a class="action" (click)="deleteUser(data.idUsuario)">Eliminar</a>
+        <a class="action" (click)="deleteUser(data.idUsuario)" nz-tooltip nzTooltipTitle="Eliminar">
+          <span nz-icon nzType="delete" nzTheme="fill"></span>
+        </a>
         <nz-divider nzType="vertical"></nz-divider>
-        <a class="action">Editar</a>
+        <a class="action" (click)="selectUserEdit(data)" nz-tooltip nzTooltipTitle="Editar">
+          <span nz-icon nzType="edit" nzTheme="fill"></span>
+        </a>
         <nz-divider nzType="vertical"></nz-divider>
-        <a class="action" (click)="open(data)">Detalles</a>
+        <a class="action" (click)="open(data)" nz-tooltip nzTooltipTitle="Ver detalles">
+          <span nz-icon nzType="eye" nzTheme="fill"></span>
+        </a>
       </td>
     </tr>
   </tbody>
@@ -91,14 +106,19 @@
 
 <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
   (nzOnCancel)="handleCancel()">
-  <ng-template #modalTitle>Agregar un usuario</ng-template>
+  <ng-template #modalTitle> 
+    <span *ngIf="formMode == 'edicion'">Editar usuario</span>  
+    <span *ngIf="formMode == 'adicion'">Agregar un nuevo usuario</span>
+</ng-template>
+
+
 
   <ng-template #modalContent>
 
     <div class="cls-form" [formGroup]="formUser">
 
       <div>
-        <label for="">Cedúla</label>
+        <label for="">Documento</label>
         <input type="text" formControlName="idUsuario" />
       </div>
 
@@ -138,19 +158,15 @@
 
   <ng-template #modalFooter>
     <button nz-button nzType="default" (click)="handleCancel()">Cancelar</button>
-    <button nz-button nzType="primary" (click)="saveUser()" [nzLoading]="isConfirmLoading">Agregar</button>
+    <button *ngIf="formMode == 'adicion'" nz-button nzType="primary" (click)="saveUser()" [nzLoading]="isConfirmLoading">Agregar</button>
+    <button *ngIf="formMode == 'edicion'" nz-button nzType="primary" (click)="editUser()" [nzLoading]="isConfirmLoading">Editar</button>
   </ng-template>
 </nz-modal>
 
 
 
-<nz-drawer
-  [nzClosable]="false"
-  [nzVisible]="visible"
-  nzPlacement="right"
-  nzTitle="Datos de usuario"
-  (nzOnClose)="close()"
->
+<nz-drawer [nzClosable]="false" [nzVisible]="visible" nzPlacement="right" nzTitle="Datos de usuario"
+  (nzOnClose)="close()">
   <ng-container *nzDrawerContent>
     <p>Cedula: {{userCurrent.idUsuario}}</p>
     <p>Nombre: {{ userCurrent.nombre }}</p>

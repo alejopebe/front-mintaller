@@ -1,0 +1,20 @@
+.form-container{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  .form{
+    min-width: 400px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border: 1px solid gray;
+
+    div{
+        display: flex;
+        flex-direction: column;
+    }
+  }

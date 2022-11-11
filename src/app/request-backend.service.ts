@@ -30,6 +30,7 @@ export class RequestBackendService {
     }
   }
 
+
 // -----------------------
 
 updateData(entidad: string, key: string, data: string): Observable<any> {
@@ -58,8 +59,9 @@ updateData(entidad: string, key: string, data: string): Observable<any> {
     const urlEdit = this.url + entidad;
     return this.http.post(urlEdit, data, httpOptions);
   }
-// -----------
 
+
+// -----------
 deleteData(entidad: string, code: string): Observable<any> {
   const urlDelete = this.url + entidad + '/' + code;
   return this.http.delete(urlDelete);

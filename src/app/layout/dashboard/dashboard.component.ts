@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RequestBackendService } from '../request-backend.service';
+import { RequestBackendService } from '../../request-backend.service';
 
 @Component({
   selector: 'app-dashboard',
