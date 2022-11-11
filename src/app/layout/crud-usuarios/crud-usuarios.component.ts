@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RequestBackendService } from '../../request-backend.service';
+import Swal from 'sweetalert2'
 
 interface Person {
   idUsuario: string;
@@ -13,6 +14,18 @@ interface Person {
   rolUsuarioId: string,
   sedeId: string
 }
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'bottom-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
 
 @Component({
   selector: 'app-crud-usuarios',
@@ -80,13 +93,13 @@ export class CrudUsuariosComponent implements OnInit {
   ngOnInit(): void { }
 
 
-//::::: Obtine a los usuarios
+  //::::: Obtine a los usuarios
   getUsuarios(sede: string) {
     const entity = 'sedes/' + sede + '/usuarios';
     this.requestBack.getData(entity).subscribe({
       next: (data) => {
         console.log('next');
-        this.listOfData = data.filter((item: { rolUsuarioId: string;  sedeId: string}) => item.rolUsuarioId === this.currentRol && item.sedeId === this.currentSede);
+        this.listOfData = data.filter((item: { rolUsuarioId: string; sedeId: string }) => item.rolUsuarioId === this.currentRol && item.sedeId === this.currentSede);
         //console.log( this.listOfData)
       },
       error: (error) => {
@@ -99,7 +112,7 @@ export class CrudUsuariosComponent implements OnInit {
     });
   }
 
-//::::: Obtener sedes
+  //::::: Obtener sedes
   getSedes() {
     this.requestBack.getData('sedes').subscribe({
       next: (data) => {
@@ -119,7 +132,7 @@ export class CrudUsuariosComponent implements OnInit {
   }
 
 
-//::::::: Obtener los roles
+  //::::::: Obtener los roles
   getRoles() {
     this.requestBack.getData('rol-usuarios').subscribe({
       next: (data) => {
@@ -138,7 +151,7 @@ export class CrudUsuariosComponent implements OnInit {
   }
 
 
-//::::: Filtra a los suarios por nombre
+  //::::: Filtra a los suarios por nombre
   getUsuariosFilter() {
     this.requestBack.getData('usuarios', this.campoBuscar).subscribe({
       next: (data) => {
@@ -162,7 +175,7 @@ export class CrudUsuariosComponent implements OnInit {
 
 
 
-//::::: Edita a los usuarios
+  //::::: Edita a los usuarios
   updateUserName(newUser: Person): void {
     const copiaLista = JSON.parse(JSON.stringify(this.listOfData));
 
@@ -202,6 +215,13 @@ export class CrudUsuariosComponent implements OnInit {
         const cloneList = JSON.parse(JSON.stringify(this.listOfData));
         cloneList.unshift(data);
         this.listOfData = cloneList;
+        this.isVisible = false;
+
+        // alert mensaje
+        Toast.fire({
+          icon: 'success',
+          title: 'Usuario agregado exitosamente.'
+        })
       },
       error: (error) => {
         console.log('error: ' + error);
@@ -214,7 +234,7 @@ export class CrudUsuariosComponent implements OnInit {
   }
 
 
-//::::: Editar usuario
+  //::::: Editar usuario
   editUser(): void {
     const user = this.formUser.getRawValue();
 
@@ -224,10 +244,22 @@ export class CrudUsuariosComponent implements OnInit {
 
           this.getUsuarios(this.currentSede);
           this.isVisible = false;
+
+          // alert mensaje
+          Toast.fire({
+            icon: 'success',
+            title: 'Usuario editado exitosamente'
+          })
         },
         error: (error) => {
           console.log('error: ' + error);
           this.listOfData = [];
+
+          // alert mensaje
+          Toast.fire({
+            icon: 'error',
+            title: 'No se pudo editar, intenalo de nuevo.'
+          })
         },
         complete: () => {
           console.log('complete');
@@ -236,7 +268,7 @@ export class CrudUsuariosComponent implements OnInit {
   }
 
 
-//::::: Seleccionar usuario tabla y rellanar los inputs
+  //::::: Seleccionar usuario tabla y rellanar los inputs
   selectUserEdit(user: any): void {
     this.formMode = 'edicion';
     this.formUser.patchValue(user);
@@ -244,32 +276,60 @@ export class CrudUsuariosComponent implements OnInit {
   }
 
 
-//::::: Eliminar usuario
+  //::::: Eliminar usuario
   deleteUser(code: string): void {
-    this.requestBack.deleteData('usuarios', code).subscribe({
-      next: (data) => {
-        const cloneList = JSON.parse(JSON.stringify(this.listOfData));
-        for (const i in cloneList) {
-          if (cloneList[i].idUsuario == code) {
-            cloneList.splice(Number(i), 1);
-            break;
-          }
-        }
-        this.listOfData = cloneList;
-      },
-      error: (error) => {
-        console.log('error: ' + error);
-        this.listOfData = [];
-      },
-      complete: () => {
-        console.log('complete');
-      },
-    });
+
+    Swal.fire({
+      title: '¿Estas seguro?',
+      text: "Una vez eliminado no podras recuperarlo",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, elimínalo!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.requestBack.deleteData('usuarios', code).subscribe({
+          next: (data) => {
+            const cloneList = JSON.parse(JSON.stringify(this.listOfData));
+            for (const i in cloneList) {
+              if (cloneList[i].idUsuario == code) {
+                cloneList.splice(Number(i), 1);
+                break;
+              }
+            }
+            this.listOfData = cloneList;
+          },
+          error: (error) => {
+            console.log('error: ' + error);
+            this.listOfData = [];
+          },
+          complete: () => {
+            console.log('complete');
+          },
+        });
+
+
+        // alert mensaje
+        Toast.fire({
+          icon: 'success',
+          title: 'Usuario eliminado exitosamente.'
+        })
+      }
+    })
+
+
+
+
+
+
   }
 
 
 
-//::::: trae los usuario a la sede seleccionada
+  //::::: trae los usuario a la sede seleccionada
   changeSede(): void {
     this.getUsuarios(this.currentSede);
   }
@@ -279,7 +339,7 @@ export class CrudUsuariosComponent implements OnInit {
 
 
 
-//::::: Modal de agregar usuario
+  //::::: Modal de agregar usuario
   showModal(): void {
     this.isVisible = true;
     this.formMode = 'adicion'
@@ -297,7 +357,7 @@ export class CrudUsuariosComponent implements OnInit {
   }
 
 
-//:::::  Offcanva
+  //:::::  Offcanva
   visible = false;
 
   open(user: Person): void {

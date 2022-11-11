@@ -1,0 +1,156 @@
+<div class="buscador-conatiner">
+
+    <div class="options">
+  
+      <button nz-button nzType="primary" (click)="showModal()">Nuevo Vehículo</button>
+  
+      <!-- <div>
+        <label for="">Sede: </label>
+        <nz-select [(ngModel)]="currentSede" (ngModelChange)="changeSede()" style="min-width: 150px ;">
+          <nz-option *ngFor="let sede of sedes" [nzValue]="sede.idSede" [nzLabel]="sede.nombre"></nz-option>
+        </nz-select>
+      </div> -->
+  
+      <!-- <div>
+        <label for="">Rol: </label>
+        <nz-select [(ngModel)]="currentRol" (ngModelChange)="changeRol()" style="min-width: 150px ;">
+          <nz-option *ngFor="let rol of roles" [nzValue]="rol.idRol" [nzLabel]="rol.nombre"></nz-option>
+        </nz-select>
+      </div> -->
+      <span>Usuario: {{ currentUsuario }}</span>
+  
+    </div>
+  
+    <div class="buscador">
+      <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+        <input type="text" nz-input placeholder="busca por nombre" />
+      </nz-input-group>
+      <ng-template #suffixIconButton>
+        <button nz-button nzType="primary" nzSearch><span nz-icon nzType="search"></span></button>
+      </ng-template>
+    </div>
+  </div>
+  
+     <nz-table #basicTable [nzData]="listOfData" [nzScroll]="{ x: '400px' }">
+        <thead>
+          <tr>
+            <th>Placa</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Cilindraje</th>
+            <th>Propietario</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data" (click)="clickUser(data)">
+            <td>{{ data.idVehiculo }}</td>
+            <td>{{ data.marca }}</td>
+            <td>{{ data.modelo }}</td>
+            <td>{{ data.cilindraje }}</td>
+            <td>{{ data.usuarioId }}</td>
+            <td>
+              <a class="action" (click)="deleteVehiculo(data.idVehiculo)" nz-tooltip nzTooltipTitle="Eliminar">
+                <span nz-icon nzType="delete" nzTheme="fill"></span>
+              </a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a class="action" (click)="selectVehiculoEdit(data)" nz-tooltip nzTooltipTitle="Editar">
+                <span nz-icon nzType="edit" nzTheme="fill"></span>
+              </a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a class="action" (click)="open(data)" nz-tooltip nzTooltipTitle="Ver detalles">
+                <span nz-icon nzType="eye" nzTheme="fill"></span>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    
+  
+  
+  <!-- Modal -->
+  <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
+    (nzOnCancel)="handleCancel()">
+    <ng-template #modalTitle>
+      <span *ngIf="formMode == 'edicion'">Editar vehículo</span>
+      <span *ngIf="formMode == 'adicion'">Agregar un nuevo vehículo</span>
+    </ng-template>
+  
+    <ng-template #modalContent>
+  
+      <div class="cls-form" [formGroup]="formVehiculo">
+  
+        <div>
+          <label for="">Placa</label>
+          <input type="text" class="input"  placeholder="ABC123" formControlName="idVehiculo"/>
+        </div>
+  
+        <div>
+          <label for="">tipo</label>
+          <!-- <input type="text" class="input" formControlName="tipo"/> -->
+          <nz-select [(ngModel)]="currentTipo" formControlName="tipo">
+            <nz-option *ngFor="let tipo of tiposVehiculo" [nzValue]="tipo.nombre" [nzLabel]="tipo.nombre"></nz-option>
+          </nz-select>
+        </div>
+  
+        <div>
+          <label for="">Marca</label>
+          <input type="text" class="input" formControlName="marca"/>
+        </div>
+  
+        <div>
+          <label for="">Modelo</label>
+          <input type="number" class="input" formControlName="modelo"/>
+        </div>
+  
+        <div>
+          <label for="">Cilindraje</label>
+          <input type="number"  autocomplete="off" class="input" formControlName="cilindraje"/>
+        </div>
+  
+        <div>
+          <label for="">Numero pasajeros</label>
+          <input type="number"  autocomplete="off" class="input" formControlName="numeroPasajeros"/>
+        </div>
+  
+        <div>
+          <label for="">País origen</label>
+          <input type="text"  autocomplete="off" class="input" formControlName="paisOrigen"/>
+        </div>
+  
+        <!-- <div>
+          <label for="">ID propietario </label>
+          <input type="text"  autocomplete="off" class="input" formControlName="usuarioId"/>
+        </div> -->
+  
+        <div id="asd">
+          <label for="">Descripción</label>
+          <textarea name=""  class="input" formControlName="descripcion"></textarea>
+        </div>
+  
+      </div>
+  
+    </ng-template>
+  
+    <ng-template #modalFooter>
+      <button nz-button nzType="default" (click)="handleCancel()">Cancelar</button>
+      <button *ngIf="formMode == 'adicion'" nz-button nzType="primary" (click)="saveVehicle()" [nzLoading]="isConfirmLoading">Agregar</button>
+      <button *ngIf="formMode == 'edicion'" nz-button nzType="primary" (click)="editVehiculo()" [nzLoading]="isConfirmLoading">Editar</button>
+    </ng-template>
+  </nz-modal>
+  
+  
+  <nz-drawer [nzClosable]="false" [nzVisible]="visible" nzPlacement="right" nzTitle="Datos de vehículo"
+    (nzOnClose)="close()">
+    <ng-container *nzDrawerContent>
+      <p class="info-title">Placa: <span class="info">{{currentVehicle.idVehiculo}} </span></p>
+      <p class="info-title">Tipo: <span class="info">{{currentVehicle.tipo}}</span></p>
+      <p class="info-title">Marca: <span class="info">{{ currentVehicle.marca}}</span></p>
+      <p class="info-title">Modelo: <span class="info">{{currentVehicle.modelo}}</span></p>
+      <p class="info-title">Número Pasajeros: <span class="info">{{currentVehicle.numeroPasajeros}}</span></p>
+      <p class="info-title">País Origen: <span class="info">{{currentVehicle.paisOrigen}}</span></p>
+  
+      <p class="info-title">Descripción: <span class="info">{{currentVehicle.descripcion}}</span></p>
+  
+    </ng-container>
+  </nz-drawer>

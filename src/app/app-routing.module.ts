@@ -7,7 +7,8 @@ import { CrudVehiculosComponent } from './layout/crud-vehiculos/crud-vehiculos.c
 import { DashboardComponent } from './layout/dashboard/dashboard.component';
 import { PagesComponent } from './pages/jefe-operaciones/pages.component';
 import { UsuarioComponent } from './pages/usuario/usuario.component';
-import { RevisionesComponent } from './revisiones/revisiones.component';
+import { RevisionesComponent } from './layout/revisiones/revisiones.component';
+import { MisVehiculosComponent } from './layout-usuario/mis-vehiculos/mis-vehiculos.component';
 
 const routes: Routes = [
   {
@@ -21,7 +22,12 @@ const routes: Routes = [
     ]
   },
 
-  {path: 'Usuario', component: UsuarioComponent},
+  {
+    path: 'Usuario', component: UsuarioComponent,
+    children: [
+      { path: 'mis-vehiculos', component: MisVehiculosComponent }
+    ]
+  },
 
 
   
