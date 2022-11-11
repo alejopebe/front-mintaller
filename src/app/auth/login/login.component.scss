@@ -3,7 +3,9 @@
         max-width: 500px;
         padding: 3em;
         border-radius: 3px;
-        border: 1px solid gray;
+        background-color: white;
+
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
       }
 
@@ -24,6 +26,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: #f4f4f4;
 
 
       }

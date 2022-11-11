@@ -57,7 +57,7 @@
               <span nz-icon nzType="edit" nzTheme="fill"></span>
             </a>
             <nz-divider nzType="vertical"></nz-divider>
-            <a class="action" nz-tooltip nzTooltipTitle="Ver detalles">
+            <a class="action" (click)="open(data)" nz-tooltip nzTooltipTitle="Ver detalles">
               <span nz-icon nzType="eye" nzTheme="fill"></span>
             </a>
           </td>
@@ -118,3 +118,20 @@
     <button nz-button nzType="primary"  [nzLoading]="isConfirmLoading">Agregar</button>
   </ng-template>
 </nz-modal>
+
+
+<nz-drawer [nzClosable]="false" [nzVisible]="visible" nzPlacement="right" nzTitle="Datos de vehículo"
+  (nzOnClose)="close()">
+  <ng-container *nzDrawerContent>
+    <p class="info-title">Placa: <span class="info">{{currentVehicle.idVehiculo}} </span></p>
+    <p class="info-title">Tipo: <span class="info">{{currentVehicle.tipo}}</span></p>
+    <p class="info-title">Marca: <span class="info">{{ currentVehicle.marca}}</span></p>
+    <p class="info-title">Modelo: <span class="info">{{currentVehicle.modelo}}</span></p>
+    <p class="info-title">Número Pasajeros: <span class="info">{{currentVehicle.numeroPasajeros}}</span></p>
+    <p class="info-title">País Origen: <span class="info">{{currentVehicle.paisOrigen}}</span></p>
+    <p class="info-title">Propietario: <span class="info">{{currentVehicle.usuarioId}}</span></p>
+
+    <p class="info-title">Descripción: <span class="info">{{currentVehicle.descripcion}}</span></p>
+
+  </ng-container>
+</nz-drawer>

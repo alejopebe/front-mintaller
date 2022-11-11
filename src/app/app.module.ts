@@ -40,6 +40,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { PagesComponent } from './pages/jefe-operaciones/pages.component';
 import { UsuarioComponent } from './pages/usuario/usuario.component';
 import { UserLayoutComponent } from './layout-usuario/user-layout.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 registerLocaleData(es);
 
@@ -53,6 +54,7 @@ registerLocaleData(es);
     PagesComponent,
     UsuarioComponent,
     LoginComponent,
+    SignupComponent
 
   ],
   imports: [
@@ -78,8 +80,7 @@ registerLocaleData(es);
     NzSpaceModule,
     NzDrawerModule,
     NzToolTipModule,
-    NzAutocompleteModule
-    
+    NzAutocompleteModule,
   ],
   providers: [
     { provide: NZ_I18N, useValue: es_ES }

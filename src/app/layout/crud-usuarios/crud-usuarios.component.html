@@ -11,13 +11,13 @@
       </nz-select>
     </div>
 
-    
-    <!-- <div>
+
+    <div>
       <label for="">Rol: </label>
-      <nz-select [(ngModel)]="currentRol" (ngModelChange)="changeRol()" style="min-width: 150px ;">
+      <nz-select [(ngModel)]="currentRol" (ngModelChange)="changeSede()" style="min-width: 150px ;">
         <nz-option *ngFor="let rol of roles" [nzValue]="rol.idRol" [nzLabel]="rol.nombre"></nz-option>
       </nz-select>
-    </div> -->
+    </div>
 
   </div>
 
@@ -106,17 +106,16 @@
 
 <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
   (nzOnCancel)="handleCancel()">
-  <ng-template #modalTitle> 
-    <span *ngIf="formMode == 'edicion'">Editar usuario</span>  
+  <ng-template #modalTitle>
+    <span *ngIf="formMode == 'edicion'">Editar usuario</span>
     <span *ngIf="formMode == 'adicion'">Agregar un nuevo usuario</span>
-</ng-template>
+  </ng-template>
 
 
 
   <ng-template #modalContent>
 
     <div class="cls-form" [formGroup]="formUser">
-
       <div>
         <label for="">Documento</label>
         <input type="text" formControlName="idUsuario" />
@@ -152,14 +151,22 @@
         <input type="password" formControlName="contrasenia" autocomplete="off" />
       </div>
 
+      <div>
+        <label for="">Rol</label>
+        <nz-select [(ngModel)]="currentRol" formControlName="rolUsuarioId">
+          <nz-option *ngFor="let rol of roles" [nzValue]="rol.idRol" [nzLabel]="rol.nombre"></nz-option>
+        </nz-select>
+      </div>
     </div>
 
   </ng-template>
 
   <ng-template #modalFooter>
     <button nz-button nzType="default" (click)="handleCancel()">Cancelar</button>
-    <button *ngIf="formMode == 'adicion'" nz-button nzType="primary" (click)="saveUser()" [nzLoading]="isConfirmLoading">Agregar</button>
-    <button *ngIf="formMode == 'edicion'" nz-button nzType="primary" (click)="editUser()" [nzLoading]="isConfirmLoading">Editar</button>
+    <button *ngIf="formMode == 'adicion'" nz-button nzType="primary" (click)="saveUser()"
+      [nzLoading]="isConfirmLoading">Agregar</button>
+    <button *ngIf="formMode == 'edicion'" nz-button nzType="primary" (click)="editUser()"
+      [nzLoading]="isConfirmLoading">Editar</button>
   </ng-template>
 </nz-modal>
 
@@ -175,6 +182,7 @@
     <p>Correo: {{ userCurrent.correo}} </p>
     <p>Ciudad: {{ userCurrent.ciudad}} </p>
     <p>Rol: {{ userCurrent.rolUsuarioId }} </p>
+    <p>Cede: {{ userCurrent.sedeId}}</p>
 
   </ng-container>
 </nz-drawer>

@@ -4,9 +4,13 @@ import { RequestBackendService } from '../../request-backend.service';
 
 interface Vehiculo {
   idVehiculo: string;
+  tipo: string,
   marca: string;
   modelo: string;
   cilindraje: string;
+  numeroPasajeros: string;
+  paisOrigen: string;
+  descripcion: string,
   usuarioId: string
 }
 
@@ -24,9 +28,13 @@ export class CrudVehiculosComponent {
 
   currentVehicle: Vehiculo = { 
     idVehiculo: '', 
+    tipo: '',
     marca: '', 
     modelo: '', 
     cilindraje: '',
+    numeroPasajeros: '',
+    paisOrigen: '',
+    descripcion: '',
     usuarioId: ''
   }
 
@@ -63,8 +71,7 @@ export class CrudVehiculosComponent {
 
 
   
-  // modal de agregar usuario
-
+  //::::: modal de agregar usuario
   showModal(): void {
     this.isVisible = true;
   }
@@ -79,4 +86,19 @@ export class CrudVehiculosComponent {
     console.log('Button cancel clicked!');
     this.isVisible = false;
   }
+
+
+//:::::  Offcanva
+  visible = false;
+
+  open(user: Vehiculo): void {
+    this.visible = true;
+    //console.log(user);
+    this.currentVehicle = JSON.parse(JSON.stringify(user));
+  }
+
+  close(): void {
+    this.visible = false;
+  }
+
 }
