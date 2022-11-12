@@ -3,27 +3,15 @@
     <div class="options">
   
       <button nz-button nzType="primary" (click)="showModal()">Nuevo Vehículo</button>
-  
-      <!-- <div>
-        <label for="">Sede: </label>
-        <nz-select [(ngModel)]="currentSede" (ngModelChange)="changeSede()" style="min-width: 150px ;">
-          <nz-option *ngFor="let sede of sedes" [nzValue]="sede.idSede" [nzLabel]="sede.nombre"></nz-option>
-        </nz-select>
-      </div> -->
-  
-      <!-- <div>
-        <label for="">Rol: </label>
-        <nz-select [(ngModel)]="currentRol" (ngModelChange)="changeRol()" style="min-width: 150px ;">
-          <nz-option *ngFor="let rol of roles" [nzValue]="rol.idRol" [nzLabel]="rol.nombre"></nz-option>
-        </nz-select>
-      </div> -->
+
+      
       <span>Usuario: {{ currentUsuario }}</span>
   
     </div>
   
     <div class="buscador">
       <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-        <input type="text" nz-input placeholder="busca por nombre" />
+        <input type="text" nz-input placeholder="busca por placa" />
       </nz-input-group>
       <ng-template #suffixIconButton>
         <button nz-button nzType="primary" nzSearch><span nz-icon nzType="search"></span></button>

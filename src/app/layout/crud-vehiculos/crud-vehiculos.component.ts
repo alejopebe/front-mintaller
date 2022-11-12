@@ -56,6 +56,8 @@ export class CrudVehiculosComponent {
   tiposVehiculo: any = [];
   currentTipo = '';
 
+  campoBuscar = '';
+
   listOfData: Vehiculo[] = [];
 
   formVehiculo: FormGroup = new FormGroup({});
@@ -204,6 +206,23 @@ export class CrudVehiculosComponent {
 
   }
 
+
+
+  getVehiculoFilter() {
+    this.requestBack.getData('vehiculos', this.campoBuscar).subscribe({
+      next: (data) => {
+        console.log('next');
+        this.listOfData = data;
+      },
+      error: (error) => {
+        console.log('error: ' + error);
+        this.listOfData = [];
+      },
+      complete: () => {
+        console.log('complete');
+      },
+    });
+  }
 
 
 

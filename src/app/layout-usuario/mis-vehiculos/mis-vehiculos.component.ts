@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RequestBackendService } from 'src/app/request-backend.service';
+import Swal from 'sweetalert2'
 
 interface Vehiculo {
   idVehiculo: string;
@@ -13,6 +14,18 @@ interface Vehiculo {
   descripcion: string,
   usuarioId: string
 }
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'bottom-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
 
 @Component({
   selector: 'app-mis-vehiculos',
@@ -39,7 +52,7 @@ export class MisVehiculosComponent implements OnInit {
 
   tiposVehiculo: any = [];
   currentTipo = '';
-  currentUsuario = '909080'
+  currentUsuario = '9090'
 
   listOfData: Vehiculo[] = [];
 
@@ -98,6 +111,11 @@ saveVehicle(): void {
       cloneList.unshift(data);
       this.listOfData = cloneList;
       this.isVisible = false;
+
+      Toast.fire({
+        icon: 'success',
+        title: 'Vehículo agregado exitosamente.'
+      })
     },
     error: (error) => {
       console.log('error: ' + error);
@@ -119,6 +137,11 @@ editVehiculo(): void {
 
         this.getVehiculos();
         this.isVisible = false;
+
+        Toast.fire({
+          icon: 'success',
+          title: 'Vehículo editado exitosamente.'
+        })
       },
       error: (error) => {
         console.log('error: ' + error);
@@ -132,26 +155,47 @@ editVehiculo(): void {
 
 //::::: Eliminar vehículo
 deleteVehiculo(code: string): void {
-  this.requestBack.deleteData('vehiculos', code).subscribe({
-    next: (data) => {
-      const cloneList = JSON.parse(JSON.stringify(this.listOfData));
-      for (const i in cloneList) {
-        if (cloneList[i].idVehiculo == code) {
-          cloneList.splice(Number(i), 1);
-          break;
-        }
+
+  Swal.fire({
+    title: '¿Estas seguro?',
+    text: "Una vez eliminado no podras recuperarlo",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, elimínalo!',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+
+      this.requestBack.deleteData('vehiculos', code).subscribe({
+        next: (data) => {
+          const cloneList = JSON.parse(JSON.stringify(this.listOfData));
+          for (const i in cloneList) {
+            if (cloneList[i].idVehiculo == code) {
+              cloneList.splice(Number(i), 1);
+              break;
+            }
+          }
+          this.listOfData = cloneList;
+        },
+        error: (error) => {
+          console.log('error: ' + error);
+          this.listOfData = [];
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+
+        // alert mensaje
+        Toast.fire({
+          icon: 'success',
+          title: 'Vehículo eliminado exitosamente.'
+        })
       }
-      this.listOfData = cloneList;
-    },
-    error: (error) => {
-      console.log('error: ' + error);
-      this.listOfData = [];
-    },
-    complete: () => {
-      console.log('complete');
-    },
-  });
-}
+    });
+  }
 
 
 //::::::: Obtener tipos de vehículos

@@ -1,134 +1,71 @@
 <nz-layout class="app-layout">
-    <nz-sider class="menu-sidebar"
-              nzCollapsible
-              nzWidth="256px"
-              nzBreakpoint="md"
-              [(nzCollapsed)]="isCollapsed"
-              [nzTrigger]="null">
-      <div class="sidebar-logo">
-        <a routerLink="/layout">
-          <img src="../assets/img/logo.png" alt="logo">
-          <h1>MINTALLER</h1>
-        </a>
+  <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null">
+    <div class="sidebar-logo">
+      <a routerLink="/layout">
+        <img src="../assets/img/logo.png" alt="logo">
+        <h1>MINTALLER</h1>
+      </a>
+    </div>
+
+    <ul nz-menu nzTheme="light" nzMode="inline">
+
+      <li nz-menu-item>
+        <span nz-icon nzType="home" nzTheme="outline"></span>
+        <span><a routerLink="inicio">Inicio</a></span>
+      </li>
+
+      <li nz-menu-item>
+        <span nz-icon nzType="car"></span>
+        <span><a routerLink="mis-vehiculos">Mis Vehículos</a></span>
+      </li>
+
+      <li nz-menu-item>
+        <span nz-icon nzType="book"></span>
+        <span><a routerLink="#">Revisiones</a></span>
+      </li>
+
+      <li nz-menu-item id="closed">
+        <span nz-icon nzType="logout" nzTheme="outline"></span>
+        <span><a routerLink="#">Cerrar sesión</a></span>
+      </li>
+    </ul>
+
+  </nz-sider>
+
+
+  <nz-layout>
+    <nz-header>
+      <div class="app-header">
+        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+          <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
+        </span>
+        <span class="user-name">Alejandro Peña</span>
       </div>
-      <!-- <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-        <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
-          <ul>
-            <li nz-menu-item nzMatchRouter>
-              <a routerLink="/layout">Dashboard</a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-              <a>Monitor</a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-              <a>Workplace</a>
-            </li>
-          </ul>
-        </li> -->
-        
 
-        <!-- <li nz-submenu nzOpen nzTitle="Usuarios" nzIcon="user">
-          <ul>
-            <li nz-menu-item nzMatchRouter>
-              <a routerLink="/Usuarios">Usuarios</a>
-            </li>
-          </ul>
-        </li> -->
+    </nz-header>
+    <nz-content>
 
-
-
-      <!-- </ul> -->
-
-
-
-      <ul nz-menu nzTheme="dark" nzMode="inline">
-        
-        <!-- <li nz-menu-item>
-          <span nz-icon nzType="user"></span>
-          <span><a routerLink="/Usuarios">Usuarios</a></span>
-        </li> -->
-        <li nz-menu-item>
-          <span nz-icon nzType="home" nzTheme="outline"></span>
-          <span><a routerLink="#">Inicio</a></span>
-        </li>
-
-        <li nz-menu-item>
-          <span nz-icon nzType="car"></span>
-          <span><a routerLink="mis-vehiculos">Mis Vehículos</a></span>
-        </li>
-
-        <li nz-menu-item>
-          <span nz-icon nzType="book"></span>
-          <span><a routerLink="#">Revisiones</a></span>
-        </li>
-
-        <!-- <li nz-submenu nzTitle="Usuarios" nzIcon="team">
-          <ul>
-            <li nz-menu-item>
-              <span nz-icon nzType="user"></span>
-              <span><a routerLink="/Usuarios">Clientes</a></span>
-            </li>
-            <li nz-menu-item>
-              <span nz-icon nzType="tool" nzTheme="outline"></span>
-              <span><a routerLink="#">Mecánicos</a></span>
-            </li>
-          </ul>
-        </li> -->
-
-        <li nz-menu-item id="closed">
-          <span nz-icon nzType="logout" nzTheme="outline"></span>
-          <span><a routerLink="#">Cerrar sesión</a></span>
-        </li>
-      </ul>
+      <!-- breadcrumb -->
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>Home</nz-breadcrumb-item>
+        <nz-breadcrumb-item>
+          <a>Application List</a>
+        </nz-breadcrumb-item>
+        <nz-breadcrumb-item>An Application</nz-breadcrumb-item>
+      </nz-breadcrumb>
 
 
 
 
 
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+        <!-- <app-crud-usuarios></app-crud-usuarios> -->
 
 
-
-
-
-
-
-    </nz-sider>
-
-
-    <nz-layout>
-      <nz-header>
-        <div class="app-header">
-          <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-              <span class="trigger"
-                 nz-icon
-                 [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-              ></span>
-          </span>
-          <span class="user-name">Alejandro Peña</span>
-        </div>
-
-      </nz-header>
-      <nz-content>
-
-        <!-- breadcrumb -->
-        <nz-breadcrumb>
-          <nz-breadcrumb-item>Home</nz-breadcrumb-item>
-          <nz-breadcrumb-item>
-            <a>Application List</a>
-          </nz-breadcrumb-item>
-          <nz-breadcrumb-item>An Application</nz-breadcrumb-item>
-        </nz-breadcrumb>
-
-
-
-
-
-        <div class="inner-content">
-          <router-outlet></router-outlet>
-          <!-- <app-crud-usuarios></app-crud-usuarios> -->
-        </div>
-      </nz-content>
-      <nz-footer>MINTALLER ©2022</nz-footer>
-    </nz-layout>
+      </div>
+    </nz-content>
+    <nz-footer>MINTALLER ©2022</nz-footer>
   </nz-layout>
-  
+</nz-layout>

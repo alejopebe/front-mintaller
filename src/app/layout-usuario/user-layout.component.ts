@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { throwNzModalContentAlreadyAttachedError } from 'ng-zorro-antd/modal';
+import { RequestBackendService } from '../request-backend.service';
 
 @Component({
   selector: 'app-user-layout',
@@ -9,9 +11,10 @@ export class UserLayoutComponent implements OnInit {
 
   isCollapsed = false;
 
-  constructor() { }
+  constructor(private requestBack: RequestBackendService) { }
 
   ngOnInit(): void {
+
   }
 
 }

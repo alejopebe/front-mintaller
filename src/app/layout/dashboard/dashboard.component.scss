@@ -14,15 +14,18 @@
     padding: 0.8em;
     min-width: 20rem;
     height: 10rem;
-    background-color: #001529;
+    background-image: url("https://cdn.auth0.com/website/gartner/bg-desktop.svg");
+    background-size: 120%;
+    background-repeat: no-repeat;
+    // border: 2px solid #f0f2f5;
+    // background-position-x: 30px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
 }
 .crd-titulo{
-    color: white;
     font-size: 20px;
 }
 .crd-total{
-    color: white;
     font-size: 60px;
 }
 

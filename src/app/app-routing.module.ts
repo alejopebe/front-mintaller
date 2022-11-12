@@ -9,6 +9,7 @@ import { PagesComponent } from './pages/jefe-operaciones/pages.component';
 import { UsuarioComponent } from './pages/usuario/usuario.component';
 import { RevisionesComponent } from './layout/revisiones/revisiones.component';
 import { MisVehiculosComponent } from './layout-usuario/mis-vehiculos/mis-vehiculos.component';
+import { InicioComponent } from './layout-usuario/inicio/inicio.component';
 
 const routes: Routes = [
   {
@@ -25,7 +26,9 @@ const routes: Routes = [
   {
     path: 'Usuario', component: UsuarioComponent,
     children: [
-      { path: 'mis-vehiculos', component: MisVehiculosComponent }
+      { path: 'inicio', component: InicioComponent},
+      { path: 'mis-vehiculos', component: MisVehiculosComponent },
+      { path: '', redirectTo: 'inicio', pathMatch: 'full'}
     ]
   },
 

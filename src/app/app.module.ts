@@ -42,6 +42,7 @@ import { UsuarioComponent } from './pages/usuario/usuario.component';
 import { UserLayoutComponent } from './layout-usuario/user-layout.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { MisVehiculosComponent } from './layout-usuario/mis-vehiculos/mis-vehiculos.component';
+import { InicioComponent } from './layout-usuario/inicio/inicio.component';
 
 registerLocaleData(es);
 
@@ -56,7 +57,8 @@ registerLocaleData(es);
     UsuarioComponent,
     LoginComponent,
     SignupComponent,
-    MisVehiculosComponent
+    MisVehiculosComponent,
+    InicioComponent
 
   ],
   imports: [
