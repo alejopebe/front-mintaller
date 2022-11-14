@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { RequestBackendService } from '../../../request-backend.service';
+import { RequestBackendService } from '../../../servicios/request-backend.service';
 import Swal from 'sweetalert2'
 
 interface Person {

@@ -7,6 +7,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
   validateForm!: UntypedFormGroup;
 
   submitForm(): void {
@@ -22,22 +23,17 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  constructor(private fb: UntypedFormBuilder) {}
+
+  constructor(private fb: UntypedFormBuilder) { }
 
   ngOnInit(): void {
 
     this.validateForm = this.fb.group({
-      correo: [null, [Validators.required]],
+      correo: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required]],
-      remember: [true]
+      //remember: [true]
     });
 
   }
 
-
-  Login(): void {
-   const datos = this.validateForm = this.validateForm.getRawValue();
-   console.log(datos);
-
-  }
 }

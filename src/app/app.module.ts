@@ -36,7 +36,7 @@ import { LayoutComponent } from './layout/layout.component';
 
 import { CrudUsuariosComponent } from './modulos/administracion/crud-usuarios/crud-usuarios.component';
 import { CrudVehiculosComponent } from './modulos/administracion/crud-vehiculos/crud-vehiculos.component';
-import { LoginComponent } from './auth/login/login.component';
+import { LoginComponent } from './modulos/auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 // import { PagesComponent } from './pages/jefe-operaciones/pages.component';
 // import { UsuarioComponent } from './pages/usuario/usuario.component';
@@ -56,7 +56,7 @@ registerLocaleData(es);
     CrudVehiculosComponent,
     // PagesComponent,
     // UsuarioComponent,
-    LoginComponent,
+    //LoginComponent,
     // MisVehiculosComponent,
     // InicioComponent
 

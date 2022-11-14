@@ -1,23 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { RequestBackendService } from 'src/app/request-backend.service';
+import { RequestBackendService } from 'src/app/servicios/request-backend.service';
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss']
 })
-
-export class SignupComponent implements OnInit {
+export class RegisterComponent implements OnInit {
 
   registroUsuario: FormGroup = new FormGroup({});
+  
 
   constructor(
-
     private requestBack: RequestBackendService,
     private fb: FormBuilder
-
-  ) {
+  ) { 
 
     this.registroUsuario = this.fb.group({
       idUsuario: '',
@@ -33,8 +31,7 @@ export class SignupComponent implements OnInit {
       rolUsuarioId: '3'
     })
 
-
-   }
+  }
 
   ngOnInit(): void {
   }
@@ -59,6 +56,10 @@ export class SignupComponent implements OnInit {
         console.log('complete');
       },
     });
-  }
+  }  
+
+
 
 }
+
+
