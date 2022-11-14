@@ -34,15 +34,15 @@ import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 
 import { LayoutComponent } from './layout/layout.component';
 
-import { CrudUsuariosComponent } from './layout/crud-usuarios/crud-usuarios.component';
-import { CrudVehiculosComponent } from './layout/crud-vehiculos/crud-vehiculos.component';
+import { CrudUsuariosComponent } from './modulos/administracion/crud-usuarios/crud-usuarios.component';
+import { CrudVehiculosComponent } from './modulos/administracion/crud-vehiculos/crud-vehiculos.component';
 import { LoginComponent } from './auth/login/login.component';
-import { PagesComponent } from './pages/jefe-operaciones/pages.component';
-import { UsuarioComponent } from './pages/usuario/usuario.component';
-import { UserLayoutComponent } from './layout-usuario/user-layout.component';
 import { SignupComponent } from './auth/signup/signup.component';
-import { MisVehiculosComponent } from './layout-usuario/mis-vehiculos/mis-vehiculos.component';
-import { InicioComponent } from './layout-usuario/inicio/inicio.component';
+// import { PagesComponent } from './pages/jefe-operaciones/pages.component';
+// import { UsuarioComponent } from './pages/usuario/usuario.component';
+// import { UserLayoutComponent } from './layout-usuario/user-layout.component';
+// import { MisVehiculosComponent } from './layout-usuario/mis-vehiculos/mis-vehiculos.component';
+// import { InicioComponent } from './layout-usuario/inicio/inicio.component';
 
 registerLocaleData(es);
 
@@ -50,15 +50,15 @@ registerLocaleData(es);
   declarations: [
     AppComponent,
     LayoutComponent,
-    UserLayoutComponent,
+    SignupComponent,
+    // UserLayoutComponent,
     CrudUsuariosComponent,
     CrudVehiculosComponent,
-    PagesComponent,
-    UsuarioComponent,
+    // PagesComponent,
+    // UsuarioComponent,
     LoginComponent,
-    SignupComponent,
-    MisVehiculosComponent,
-    InicioComponent
+    // MisVehiculosComponent,
+    // InicioComponent
 
   ],
   imports: [

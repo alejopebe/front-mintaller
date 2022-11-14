@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { RequestBackendService } from '../../request-backend.service';
+import { RequestBackendService } from '../../../request-backend.service';
 import Swal from 'sweetalert2'
 
 
@@ -178,10 +178,10 @@ export class CrudVehiculosComponent {
           next: (data) => {
             const cloneList = JSON.parse(JSON.stringify(this.listOfData));
             for (const i in cloneList) {
-            if (cloneList[i].idVehiculo == code) {
-            cloneList.splice(Number(i), 1);
-            break;
-            }
+              if (cloneList[i].idVehiculo == code) {
+                cloneList.splice(Number(i), 1);
+                break;
+              }
             }
 
             this.listOfData = cloneList;
@@ -209,7 +209,7 @@ export class CrudVehiculosComponent {
 
 
   getVehiculoFilter() {
-    this.requestBack.getData('vehiculos', this.campoBuscar).subscribe({
+    this.requestBack.getVehiculoPlaca('vehiculos', this.campoBuscar).subscribe({
       next: (data) => {
         console.log('next');
         this.listOfData = data;
@@ -223,14 +223,6 @@ export class CrudVehiculosComponent {
       },
     });
   }
-
-
-
-
-
-
-
-
 
   //::::::: Obtener tipos de vehículos
   getTipoVehiculo() {

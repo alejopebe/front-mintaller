@@ -31,6 +31,22 @@ export class RequestBackendService {
   }
 
 
+  getVehiculoPlaca(entidad: string, filter?: string): Observable<any> {
+    if (filter) {
+      // {"where": {"nombre": {"like": "p", "options": "i"}} }
+      const where = { where: { idVehiculo: { like: filter, options: 'i' } } };
+      const params = new HttpParams().append('filter', JSON.stringify(where));
+      const httpOptions = {
+        // header
+        params,
+      };
+      return this.http.get(this.url + entidad, httpOptions);
+    } else {
+      return this.http.get(this.url + entidad);
+    }
+  }
+
+
 // -----------------------
 
 updateData(entidad: string, key: string, data: string): Observable<any> {

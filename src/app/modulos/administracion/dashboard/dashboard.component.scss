@@ -1,36 +1,41 @@
-
-.container{
+.container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    
+
     flex-wrap: wrap;
     row-gap: 2em;
-    
 }
 
-.card{
+.card {
     border-radius: 10px;
     padding: 0.8em;
-    min-width: 20rem;
+    min-width: 22rem;
     height: 10rem;
-    background-image: url("https://cdn.auth0.com/website/gartner/bg-desktop.svg");
-    background-size: 120%;
-    background-repeat: no-repeat;
+    background-color: #0f1322;
+    //background-image: url("https://cdn.auth0.com/website/gartner/bg-desktop.svg");
+    //background-size: 120%;
+    //background-repeat: no-repeat;
     // border: 2px solid #f0f2f5;
     // background-position-x: 30px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
 
+.crd-titulo {
+    font-size: 30px;
+    font-weight: 400;
+    color: white;
 }
-.crd-titulo{
-    font-size: 20px;
-}
-.crd-total{
+
+.crd-total {
     font-size: 60px;
+    font-weight: bolder;
+    color: white;
+    margin: 0;
 }
 
 @media screen and (max-width: 768px) {
-    .container{
+    .container {
         justify-content: center;
     }
 }

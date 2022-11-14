@@ -88,7 +88,7 @@
         <label for="">tipo</label>
         <!-- <input type="text" class="input" formControlName="tipo"/> -->
         <nz-select [(ngModel)]="currentTipo" formControlName="tipo">
-          <nz-option *ngFor="let tipo of tiposVehiculo" [nzValue]="tipo.nombre" [nzLabel]="tipo.nombre"></nz-option>
+          <nz-option *ngFor="let tipo of tiposVehiculo" [nzValue]="tipo.id" [nzLabel]="tipo.nombre"></nz-option>
         </nz-select>
       </div>
 

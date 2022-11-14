@@ -25,10 +25,19 @@ export class LoginComponent implements OnInit {
   constructor(private fb: UntypedFormBuilder) {}
 
   ngOnInit(): void {
+
     this.validateForm = this.fb.group({
       correo: [null, [Validators.required]],
       password: [null, [Validators.required]],
       remember: [true]
     });
+
+  }
+
+
+  Login(): void {
+   const datos = this.validateForm = this.validateForm.getRawValue();
+   console.log(datos);
+
   }
 }

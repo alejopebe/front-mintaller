@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { RequestBackendService } from '../../request-backend.service';
+import { RequestBackendService } from '../../../request-backend.service';
 import Swal from 'sweetalert2'
 
 interface Person {
@@ -81,10 +81,9 @@ export class CrudUsuariosComponent implements OnInit {
       telefono: '',
       correo: "",
       fechaNacimiento: "",
-      ciudad: "aaa",
+      ciudad: "",
       direccion: "",
-      contrasenia: "",
-      sedeId: "",
+      sedeId: this.currentSede,
       rolUsuarioId: ''
     })
 
@@ -150,7 +149,7 @@ export class CrudUsuariosComponent implements OnInit {
     });
   }
 
-
+  
   //::::: Filtra a los suarios por nombre
   getUsuariosFilter() {
     this.requestBack.getData('usuarios', this.campoBuscar).subscribe({
@@ -172,6 +171,17 @@ export class CrudUsuariosComponent implements OnInit {
     //console.log(user);
     this.userCurrent = JSON.parse(JSON.stringify(user));
   }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

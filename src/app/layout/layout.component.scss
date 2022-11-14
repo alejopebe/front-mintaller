@@ -1,3 +1,10 @@
+*{
+  -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
+}
+
 :host {
     display: flex;
     text-rendering: optimizeLegibility;
@@ -38,7 +45,7 @@
     overflow: hidden;
     line-height: 64px;
     background-color: #fff;
-    // background: #001529;
+    border-bottom: 1px solid #f0f2f5;
     transition: all .3s;
   }
   
@@ -52,11 +59,15 @@
   .sidebar-logo h1 {
     display: inline-block;
     margin: 0 0 0 20px;
-    color: #fff;
+    color: #0082ff;
     font-weight: 600;
     font-size: 14px;
     font-family: Avenir,Helvetica Neue,Arial,Helvetica,sans-serif;
     vertical-align: middle;
+  }
+
+  nz-breadcrumb{
+    margin-bottom: 4px;
   }
   
   nz-header {
