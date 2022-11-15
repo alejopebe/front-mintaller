@@ -37,7 +37,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { CrudUsuariosComponent } from './modulos/administracion/crud-usuarios/crud-usuarios.component';
 import { CrudVehiculosComponent } from './modulos/administracion/crud-vehiculos/crud-vehiculos.component';
 import { LoginComponent } from './modulos/auth/login/login.component';
-import { SignupComponent } from './auth/signup/signup.component';
+//import { SignupComponent } from './auth/signup/signup.component';
 // import { PagesComponent } from './pages/jefe-operaciones/pages.component';
 // import { UsuarioComponent } from './pages/usuario/usuario.component';
 // import { UserLayoutComponent } from './layout-usuario/user-layout.component';
@@ -50,7 +50,7 @@ registerLocaleData(es);
   declarations: [
     AppComponent,
     LayoutComponent,
-    SignupComponent,
+    //SignupComponent,
     // UserLayoutComponent,
     CrudUsuariosComponent,
     CrudVehiculosComponent,
