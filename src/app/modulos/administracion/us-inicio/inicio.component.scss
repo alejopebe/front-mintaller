@@ -1,39 +1,50 @@
-.action {
-    background-color: #0082ff;
-    border-radius: 2px;
-    padding: .3em;
-    color: white;
-    font-weight: 400;
-
-    span {
-        width: 20px;
-    }
-
-}
-
-.action:nth-child(1) {
-    background-color: red;
-}
-
-.action:hover {
-    background-color: #001529;
-}
-
-.buscador-conatiner {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 40px;
-}
-
-.buscador {
-    width: 300px;
-}
-
-.options {
+#vehiculos-container{
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    padding-bottom: 8px;
+    gap: 30px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    
+
+    div{
+        background-image: url("https://cdn.auth0.com/website/gartner/bg-desktop.svg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-size: 200%;
+        background-position-x: -180px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-width: 200px;
+        min-height: 150px;
+        // border: 2px solid #f0f2f5;
+        border-radius: 8px;
+        cursor: pointer;
+        
+        
+    }
+    
+    div:hover{
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
 }
+
+::-webkit-scrollbar {
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #dbdbdb;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f0f2f5;
+    border-radius: 8px;
+}
+
 
 .cls-form {
     display: grid;
@@ -81,20 +92,5 @@
             border-right-width: 1px;
             outline: 0;
         }
-    }
-}
-
-.estado-revision{
-    text-align: center;
-    background-color: #001529;
-    color: white;
-    border-radius: 8px;
-    margin-bottom: 20px;
-
-
-    p{
-        font-weight: 500;
-        margin: 0;
-        padding: 0;
     }
 }

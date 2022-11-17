@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { RequestBackendService } from '../../../servicios/request-backend.service';
+import { ModeloIdentificar } from 'src/app/modelos/identificar.modelo';
+import { RequestBackendService } from 'src/app/servicios/request-backend.service';
+import { SeguridadService } from 'src/app/servicios/seguridad.service';
 import Swal from 'sweetalert2'
-
 
 interface Vehiculo {
   idVehiculo: string;
@@ -10,7 +11,7 @@ interface Vehiculo {
   marca: string;
   modelo: number;
   cilindraje: number;
-  numeroPasajeros: string;
+  numeroPasajeros: number;
   paisOrigen: string;
   descripcion: string,
   usuarioId: string
@@ -29,13 +30,11 @@ const Toast = Swal.mixin({
 })
 
 @Component({
-  selector: 'app-crud-vehiculos',
-  templateUrl: './crud-vehiculos.component.html',
-  styleUrls: ['./crud-vehiculos.component.scss']
+  selector: 'app-mis-vehiculos',
+  templateUrl: './mis-vehiculos.component.html',
+  styleUrls: ['./mis-vehiculos.component.scss']
 })
-
-
-export class CrudVehiculosComponent {
+export class MisVehiculosComponent implements OnInit {
 
   isVisible = false;
   isConfirmLoading = false;
@@ -47,27 +46,33 @@ export class CrudVehiculosComponent {
     marca: '',
     modelo: 0,
     cilindraje: 0,
-    numeroPasajeros: '',
+    numeroPasajeros: 0,
     paisOrigen: '',
     descripcion: '',
     usuarioId: ''
   }
 
-//::::: inputs select
+  currentUsuario?= '';
+
+  //::::: inputs select
   tiposVehiculo: any = [];
   currentTipo = '';
 
   marcaVehiculo: any = [];
   currentMarca = '';
 
-  campoBuscar = '';
+
 
   listOfData: Vehiculo[] = [];
 
   formVehiculo: FormGroup = new FormGroup({});
 
 
-  constructor(private requestBack: RequestBackendService, private fb: FormBuilder) {
+  constructor(private requestBack: RequestBackendService, private fb: FormBuilder, private seguridadService: SeguridadService,) {
+
+    this.seguridadService.ObtenerDatosUsuarioEnSesion().subscribe((datos: ModeloIdentificar) => {
+      this.currentUsuario = datos.datos?.id;
+    })
 
     this.getVehiculos();
     this.getTipoVehiculo();
@@ -81,20 +86,23 @@ export class CrudVehiculosComponent {
       marca: '',
       modelo: '',
       cilindraje: '',
-      numeroPasajeros: "",
+      numeroPasajeros: '',
       paisOrigen: '',
       descripcion: '',
-      usuarioId: ''
+      usuarioId: this.currentUsuario
     })
 
   }
 
+  ngOnInit(): void {
+  }
+
   //::::: Obtine los vehículos
   getVehiculos() {
-    this.requestBack.getData('vehiculos').subscribe(
-
+    this.requestBack.getData('usuarios/' + this.currentUsuario + '/vehiculos').subscribe(
       (data) => {
         this.listOfData = data;
+        console.log(this.listOfData)
       },
       (error) => {
         console.log('error: ' + error)
@@ -118,12 +126,10 @@ export class CrudVehiculosComponent {
         this.listOfData = cloneList;
         this.isVisible = false;
 
-        // alert mensaje
         Toast.fire({
           icon: 'success',
           title: 'Vehículo agregado exitosamente.'
         })
-
       },
       error: (error) => {
         console.log('error: ' + error);
@@ -146,12 +152,10 @@ export class CrudVehiculosComponent {
           this.getVehiculos();
           this.isVisible = false;
 
-          // alert mensaje
           Toast.fire({
             icon: 'success',
             title: 'Vehículo editado exitosamente.'
           })
-
         },
         error: (error) => {
           console.log('error: ' + error);
@@ -176,7 +180,6 @@ export class CrudVehiculosComponent {
       confirmButtonText: 'Si, elimínalo!',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
-
       if (result.isConfirmed) {
 
         this.requestBack.deleteData('vehiculos', code).subscribe({
@@ -188,15 +191,7 @@ export class CrudVehiculosComponent {
                 break;
               }
             }
-
             this.listOfData = cloneList;
-
-            // alert mensaje
-            Toast.fire({
-              icon: 'success',
-              title: 'Vehículo eliminado exitosamente.'
-            })
-
           },
           error: (error) => {
             console.log('error: ' + error);
@@ -206,36 +201,24 @@ export class CrudVehiculosComponent {
             console.log('complete');
           },
         });
+
+        // alert mensaje
+        Toast.fire({
+          icon: 'success',
+          title: 'Vehículo eliminado exitosamente.'
+        })
       }
-    })
-
-  }
-
-
-
-  getVehiculoFilter() {
-    this.requestBack.getVehiculoPlaca('vehiculos', this.campoBuscar).subscribe({
-      next: (data) => {
-        console.log('next');
-        this.listOfData = data;
-      },
-      error: (error) => {
-        console.log('error: ' + error);
-        this.listOfData = [];
-      },
-      complete: () => {
-        console.log('complete');
-      },
     });
   }
+
 
   //::::::: Obtener tipos de vehículos
   getTipoVehiculo() {
     this.requestBack.getData('tipo-vehiculos').subscribe({
       next: (data) => {
         this.tiposVehiculo = data;
-        this.currentTipo = data[0].id;
-        //console.log(data)
+        this.currentTipo = data[0].nombre;
+        console.log(data)
       },
       error: (error) => {
         console.log('error: ' + error);
@@ -248,7 +231,7 @@ export class CrudVehiculosComponent {
   }
 
     //::::::: Obtener marca de vehículos
-  getMarcaVehiculo() {
+    getMarcaVehiculo() {
       this.requestBack.getData('marca-vehiculos').subscribe({
         next: (data) => {
           this.marcaVehiculo = data;
@@ -266,6 +249,10 @@ export class CrudVehiculosComponent {
     }
 
 
+
+
+
+
   //::::: Selecciona un vehículo de la tabla
   clickUser(vehiculo: Vehiculo): void {
     console.log(vehiculo);
@@ -278,9 +265,6 @@ export class CrudVehiculosComponent {
     this.formVehiculo.patchValue(user);
     this.isVisible = true;
   }
-
-
-
 
 
   //::::: modal de agregar usuario

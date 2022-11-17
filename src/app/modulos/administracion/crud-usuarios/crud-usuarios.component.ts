@@ -15,6 +15,21 @@ interface Person {
   sedeId: string
 }
 
+//::::::::::::::::::::::::::::
+interface Option {
+
+  idUsuario: string;
+  nombre: string;
+
+}
+//:::::::::::::::::::::::::::::
+
+
+
+
+
+
+
 const Toast = Swal.mixin({
   toast: true,
   position: 'bottom-end',
@@ -34,6 +49,23 @@ const Toast = Swal.mixin({
 })
 
 export class CrudUsuariosComponent implements OnInit {
+
+//::::::::::::::::::::::::::::::
+
+inputValue: Option = { 
+
+  idUsuario: '',
+  nombre: ' '
+
+}
+
+options: Option[] = [];
+
+
+//::::::::::::::::::::::::::::::
+
+
+
 
   isVisible = false;
   isConfirmLoading = false;
@@ -55,11 +87,17 @@ export class CrudUsuariosComponent implements OnInit {
   campoBuscar = '';
   listOfData: Person[] = [];
 
-
   sedes: any = [];
   roles: any = [];
+  ciudades: any = [];
+
+
+//::::::::::::::::: ngModels
   currentSede = '';
   currentRol = '';
+  ciudad = '';
+
+
 
   formUser: FormGroup = new FormGroup({});
 
@@ -67,12 +105,12 @@ export class CrudUsuariosComponent implements OnInit {
 
     private requestBack: RequestBackendService,
     private fb: FormBuilder
-
   ) {
 
     //this.getUsuarios();
     this.getRoles()
     this.getSedes()
+    this.getCiudades()
 
     this.formUser = this.fb.group({
       idUsuario: '',
@@ -89,8 +127,9 @@ export class CrudUsuariosComponent implements OnInit {
 
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
 
+   }
 
   //::::: Obtine a los usuarios
   getUsuarios(sede: string) {
@@ -100,7 +139,9 @@ export class CrudUsuariosComponent implements OnInit {
         console.log('next');
         this.listOfData = data.filter((item: { rolUsuarioId: string; sedeId: string }) => item.rolUsuarioId === this.currentRol && item.sedeId === this.currentSede);
         //console.log( this.listOfData)
+        this.options = data;
       },
+
       error: (error) => {
         console.log('error: ' + error);
         this.listOfData = [];
@@ -117,7 +158,7 @@ export class CrudUsuariosComponent implements OnInit {
       next: (data) => {
         this.sedes = data;
         //console.log(data)
-        this.currentSede = data[0].idSede;
+        this.currentSede = data[1].idSede;
         this.getUsuarios(this.currentSede);
       },
       error: (error) => {
@@ -148,6 +189,24 @@ export class CrudUsuariosComponent implements OnInit {
       },
     });
   }
+
+
+    //::::::: Obtener los ciudades
+    getCiudades() {
+      this.requestBack.getData('ciudads').subscribe({
+        next: (data) => {
+          this.ciudades = data;
+           this.ciudad = data[0].nombre;
+        },
+        error: (error) => {
+          console.log('error: ' + error);
+          this.ciudades = [];
+        },
+        complete: () => {
+          console.log('complete');
+        },
+      });
+    }
 
   
   //::::: Filtra a los suarios por nombre

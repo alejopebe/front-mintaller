@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CerrarSesionComponent } from './modulos/auth/cerrar-sesion/cerrar-sesion.component';
 
 // import { LoginComponent } from './auth/login/login.component';
 // import { SignupComponent } from './auth/signup/signup.component';
@@ -10,9 +11,16 @@ const routes: Routes = [
   // {path: 'login', component: LoginComponent},
   // {path: 'register', component: SignupComponent},
 
+  {
+    path: 'cerrarSesion', component: CerrarSesionComponent
+  },
+
   {path: 'administracion', loadChildren: () => import('./modulos/administracion/administracion.module').then
   ( (m)=> m.AdministracionModule )},
 
+  {path: 'cliente', loadChildren: () => import('./modulos/cliente/cliente.module').then
+  ( (m)=> m.ClienteModule )},
+  
   {path: 'seguridad', loadChildren: () => import('./modulos/auth/auth.module').then
   ( (m)=> m.AuthModule)}
 

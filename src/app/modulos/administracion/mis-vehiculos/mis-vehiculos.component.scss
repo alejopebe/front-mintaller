@@ -44,13 +44,12 @@
         display: flex;
         flex-direction: column;
 
-        
-        label{
+        label {
             font-weight: 600;
         }
 
 
-        input {
+        .input {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
@@ -71,30 +70,35 @@
             transition: all 0.3s;
         }
 
-        input:hover {
+
+        .input:hover {
             border-color: #40a9ff;
         }
 
-        input:focus {
+        .input:focus {
             border-color: #40a9ff;
             box-shadow: 0 0 0 2px rgba(24, 144, 255, .2);
             border-right-width: 1px;
             outline: 0;
         }
     }
+
 }
 
-.estado-revision{
-    text-align: center;
-    background-color: #001529;
-    color: white;
-    border-radius: 8px;
-    margin-bottom: 20px;
 
+#asd {
+    grid-column: 1 / span 2;
 
-    p{
-        font-weight: 500;
-        margin: 0;
-        padding: 0;
+    textarea {
+        resize: none;
     }
+}
+
+
+.info-title{
+    font-weight: bold;
+}
+
+.info{
+    font-weight: 500;
 }

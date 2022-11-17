@@ -1,45 +1,22 @@
-<nz-layout class="app-layout">
+<nz-layout class="app-layout" *ngIf="sesionIniciada">
   <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
-    [nzTrigger]="null">
+    [nzTrigger]="null" >
     <div class="sidebar-logo">
       <a routerLink="/layout">
         <img src="../assets/img/logo.png" alt="logo">
         <h1>MINTALLER</h1>
       </a>
     </div>
-    <!-- <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-        <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
-          <ul>
-            <li nz-menu-item nzMatchRouter>
-              <a routerLink="/layout">Dashboard</a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-              <a>Monitor</a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-              <a>Workplace</a>
-            </li>
-          </ul>
-        </li> -->
 
 
-    <!-- <li nz-submenu nzOpen nzTitle="Usuarios" nzIcon="user">
-          <ul>
-            <li nz-menu-item nzMatchRouter>
-              <a routerLink="/Usuarios">Usuarios</a>
-            </li>
-          </ul>
-        </li> -->
+    <ul nz-menu nzTheme="light" nzMode="inline" >
+<!-- 
+      <li nz-menu-item *ngIf="rol === '3'">
+        <span nz-icon nzType="home" nzTheme="outline"></span>
+        <span><a routerLink="inicio">Inicio</a></span>
+      </li> -->
 
-
-
-    <!-- </ul> -->
-
-
-
-    <ul nz-menu nzTheme="light" nzMode="inline">
-
-      <li nz-menu-item>
+      <li nz-menu-item *ngIf="esAdmin">
         <span nz-icon nzType="dashboard" nzTheme="outline"></span>
         <span><a routerLink="dashboard">Dashboard</a></span>
       </li>
@@ -49,21 +26,25 @@
           <span><a routerLink="/Usuarios">Usuarios</a></span>
         </li> -->
 
-      <li nz-menu-item>
+      <li nz-menu-item *ngIf="esAdmin">
         <span nz-icon nzType="car"></span>
         <span><a routerLink="vehiculos">Vehiculos</a></span>
       </li>
 
-      <li nz-menu-item>
+      <li nz-menu-item *ngIf="esAdmin">
         <span nz-icon nzType="user"></span>
         <span><a routerLink="usuarios">Usuarios</a></span>
       </li>
 
-      <li nz-menu-item>
+      <li nz-menu-item *ngIf="rol === '3'"> 
         <span nz-icon nzType="book"></span>
         <span><a routerLink="revisiones">Revisiones</a></span>
       </li>
 
+      <li nz-menu-item *ngIf="rol === '3'">
+        <span nz-icon nzType="book"></span>
+        <span><a routerLink="misvehiculos">Mis Vehículos</a></span>
+      </li>
 
       <!-- 
         <li nz-submenu nzTitle="Usuarios" nzIcon="team">
@@ -82,7 +63,7 @@
 
       <li nz-menu-item id="closed">
         <span nz-icon nzType="logout" nzTheme="outline"></span>
-        <span><a routerLink="/Vehiculos">Cerrar sesión</a></span>
+        <span><a routerLink="/cerrarSesion">Cerrar sesión</a></span>
       </li>
     </ul>
     
@@ -96,6 +77,9 @@
           <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
         </span>
 
+        <span class="user-name">{{ nombre }} 
+          {{ idUsuario }}
+        </span>
       </div>
     </nz-header>
     <nz-content>

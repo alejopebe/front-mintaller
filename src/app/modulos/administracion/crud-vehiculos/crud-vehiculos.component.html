@@ -30,7 +30,7 @@
   </div>
 </div>
 
-   <nz-table #basicTable [nzData]="listOfData" [nzScroll]="{ x: '400px' }">
+   <nz-table #basicTable [nzData]="listOfData" [nzScroll]="{ x: '400px' }" [nzPageSize]="6">
       <thead>
         <tr>
           <th>Placa</th>
@@ -94,7 +94,9 @@
 
       <div>
         <label for="">Marca</label>
-        <input type="text" class="input" formControlName="marca"/>
+        <nz-select [(ngModel)]="currentMarca" formControlName="marca">
+          <nz-option *ngFor="let marca of marcaVehiculo" [nzValue]="marca.nombre" [nzLabel]="marca.nombre"></nz-option>
+        </nz-select>
       </div>
 
       <div>
@@ -109,7 +111,7 @@
 
       <div>
         <label for="">Numero pasajeros</label>
-        <input type="number"  autocomplete="off" class="input" formControlName="numeroPasajeros"/>
+        <input type="string"  autocomplete="off" class="input" formControlName="numeroPasajeros"/>
       </div>
 
       <div>

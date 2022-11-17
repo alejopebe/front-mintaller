@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AuthRoutingModule } from './auth-routing.module';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from '../administracion/login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
@@ -13,6 +13,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { IconsProviderModule } from 'src/app/icons-provider.module';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { CerrarSesionComponent } from './cerrar-sesion/cerrar-sesion.component';
 
 
 
@@ -21,7 +22,8 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     LoginComponent,
     RegisterComponent,
     ResetPasswordComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    CerrarSesionComponent
   ],
   imports: [
     CommonModule,

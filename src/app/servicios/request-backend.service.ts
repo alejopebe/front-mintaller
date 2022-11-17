@@ -11,8 +11,6 @@ export class RequestBackendService {
 
   constructor( private http: HttpClient) {}
 
-
-
 // ----------------------
   getData(entidad: string, filter?: string): Observable<any> {
     if (filter) {

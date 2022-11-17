@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ModeloIdentificar } from '../modelos/identificar.modelo';
 
 @Injectable({
@@ -8,9 +8,30 @@ import { ModeloIdentificar } from '../modelos/identificar.modelo';
 })
 export class SeguridadService {
   url = 'http://localhost:3000/';
+  
+  datosUSuariosEnSesion = new BehaviorSubject<ModeloIdentificar>(new ModeloIdentificar());
 
   constructor(private http: HttpClient ) { 
+    this.VerificarsesionActual();
 
+  }
+
+  VerificarsesionActual(){
+    let datos = this.ObtenerSesion();
+    if(datos){
+      this.RefrecarDatosSesion(datos)
+    }
+  }
+
+  RefrecarDatosSesion(datos: ModeloIdentificar){
+
+    this.datosUSuariosEnSesion.next(datos);
+  }
+
+
+
+  ObtenerDatosUsuarioEnSesion(){
+    return this.datosUSuariosEnSesion.asObservable();
   }
 
   Identificar(usuario: string, contrasenia: string): Observable<ModeloIdentificar>{
@@ -26,9 +47,11 @@ export class SeguridadService {
   }
 
   GuradarSesion(datos: ModeloIdentificar){
+    datos.estaIdentificado = true;
     let stringDatos = JSON.stringify(datos);
-
     localStorage.setItem("datosSesion", stringDatos);
+
+    this.RefrecarDatosSesion(datos);
   }
 
   ObtenerSesion(){
@@ -43,7 +66,17 @@ export class SeguridadService {
   }
 
   EliminarSesion(){
-    localStorage.removeItem("datosSesion")
+    localStorage.removeItem("datosSesion");
+    this.RefrecarDatosSesion(new ModeloIdentificar)
+
+
+  }
+
+  InicioSesion(){
+
+    let stringDatos = localStorage.getItem("datosSesion");
+    return stringDatos;
+
   }
 
 }

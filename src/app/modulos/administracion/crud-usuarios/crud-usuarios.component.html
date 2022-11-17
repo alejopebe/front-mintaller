@@ -34,7 +34,8 @@
 </div>
 
 
-<nz-table #basicTable [nzData]="listOfData" [nzPageSize]="6" [nzScroll]="{ x: '400px' }">
+<nz-table #basicTable [nzData]="listOfData" [nzPageSize]="6" [nzScroll]="{ x: '400px' }" 
+[nzPageSize]="6" [nzBordered]="false">
   <thead>
     <tr>
       <th>Cedula</th>
@@ -129,6 +130,13 @@
       <div>
         <label for="">Apellido</label>
         <input type="text" formControlName="apellido" />
+      </div>
+
+      <div>
+        <label for="">Ciudad</label>
+        <nz-select [(ngModel)]="ciudad" formControlName="ciudad">
+          <nz-option *ngFor="let ciudad of ciudades" [nzValue]="ciudad.nombre" [nzLabel]="ciudad.nombre"></nz-option>
+        </nz-select>
       </div>
 
       <div>

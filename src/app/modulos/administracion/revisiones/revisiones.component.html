@@ -1,1 +1,127 @@
-<p>revisiones works!</p>
+<div class="buscador-conatiner">
+
+    <div class="options">
+
+        <button nz-button nzType="primary" (click)="showModal()">Nueva revision</button>
+    </div>
+
+    <div class="buscador">
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+            <input type="text" nz-input placeholder="busca por placa" [(ngModel)]="campoBuscar" />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+            <button nz-button nzType="primary" nzSearch><span nz-icon nzType="search"></span></button>
+        </ng-template>
+    </div>
+</div>
+
+<nz-table #basicTable [nzData]="listOfData" [nzScroll]="{ x: '400px' }" [nzPageSize]="6">
+    <thead>
+        <tr>
+            <th>Vehiculo</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of basicTable.data">
+            <td>{{ data.vehiculoId }}</td>
+            <td>{{ formatDate( data.fecha )}}</td>
+            <td>{{ data.estado }} </td>
+            <td>
+                <a class="action" (click)="deleteRevision(data.idRevision)" nz-tooltip nzTooltipTitle="Eliminar">
+                    <span nz-icon nzType="delete" nzTheme="fill"></span>
+                </a>
+
+                <nz-divider nzType="vertical"></nz-divider>
+
+                <!-- <a class="action" nz-tooltip nzTooltipTitle="Editar">
+                    <span nz-icon nzType="edit" nzTheme="fill"></span>
+                </a> -->
+
+                <nz-divider nzType="vertical"></nz-divider>
+
+                <a class="action" (click)="open(data)" nz-tooltip nzTooltipTitle="Ver detalles">
+                    <span nz-icon nzType="eye" nzTheme="fill"></span>
+                </a>
+
+
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+
+
+<nz-drawer [nzClosable]="false" [nzVisible]="visible" nzPlacement="right" nzTitle="Datos de usuario"
+  (nzOnClose)="close()">
+  <ng-container *nzDrawerContent>
+
+    <div class="estado-revision">
+        <p>Estado</p>
+        <p>{{ currentRevision.estado}} </p>
+    </div>
+    
+    <p>Fecha: {{ formatDate(currentRevision.fecha) }}</p>
+    <p>{{currentRevision.vitacora.liquidoFrenos }}</p>
+
+  </ng-container>
+</nz-drawer>
+
+
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
+  (nzOnCancel)="handleCancel()">
+  <ng-template #modalTitle>
+    <!-- <span *ngIf="formMode == 'edicion'">Editar usuario</span> -->
+    <span>Agenda una revisión</span>
+  </ng-template>
+
+
+
+  <ng-template #modalContent>
+
+    <div class="cls-form" [formGroup]="formRevision">
+
+      <div>
+        <label for="">Vehiculo: </label>
+        <nz-select  style="min-width: 150px ;" formControlName="vehiculoId">
+          <nz-option *ngFor="let ve of misVehiculos" [nzValue]="ve.idVehiculo" [nzLabel]="ve.idVehiculo"></nz-option>
+        </nz-select>
+      </div>
+
+
+      <div>
+        <label for="">Sede: </label>
+        <nz-select  style="min-width: 150px ;" formControlName="sedeId">
+          <nz-option *ngFor="let sede of sedes" [nzValue]="sede.idSede" [nzLabel]="sede.nombre"></nz-option>
+        </nz-select>
+      </div>
+
+      
+      <div>
+        <label for="">Fecha</label>
+        <input type="datetime-local" formControlName="fecha">
+      </div>
+
+      <!-- <div>
+        <label for="">Contraseña</label>
+        <input type="password" formControlName="contrasenia" autocomplete="off" />
+      </div> -->
+
+    </div>
+
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <button nz-button nzType="default" (click)="handleCancel()">Cancelar</button>
+    <button nz-button nzType="primary" (click)="saveRevision()"
+      [nzLoading]="isConfirmLoading">Agregar</button>
+
+
+    <!-- <button nz-button nzType="primary" (click)="editUser()"
+      [nzLoading]="isConfirmLoading">Editar</button> -->
+
+
+  </ng-template>
+</nz-modal>
+
