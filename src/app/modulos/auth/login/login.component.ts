@@ -29,7 +29,10 @@ export class LoginComponent implements OnInit {
       let passwordCifrada = CryptoJS.MD5(password).toString()
 
       console.log('submit', this.validateForm.value);
-      this.ServicioSeguridad.Identificar(correo, password).subscribe(
+      console.log(this.validateForm.value)
+
+      this.ServicioSeguridad.Identificar(correo, passwordCifrada).subscribe(
+
         (datos:any) => {
           this.ServicioSeguridad.GuradarSesion(datos);
           this.router.navigate(['/administracion'])

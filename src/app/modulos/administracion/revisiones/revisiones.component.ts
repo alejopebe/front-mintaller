@@ -196,14 +196,15 @@ export class RevisionesComponent implements OnInit {
         ////(data);
         // this.getUsuarios();
         const cloneList = JSON.parse(JSON.stringify(this.listOfData));
+        this.isVisible = false;
         cloneList.unshift(data);
         this.listOfData = cloneList;
         // this.isVisible = false;
 
-        // Toast.fire({
-        //   icon: 'success',
-        //   title: 'Vehículo agregado exitosamente.'
-        // })
+        Toast.fire({
+          icon: 'success',
+          title: 'Revision agendada exitosamente.'
+        })
       },
       error: (error) => {
         //('error: ' + error);

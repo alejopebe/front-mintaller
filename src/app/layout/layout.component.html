@@ -46,6 +46,11 @@
         <span><a routerLink="misvehiculos">Mis Vehículos</a></span>
       </li>
 
+      <li nz-menu-item *ngIf="esAdmin">
+        <span nz-icon nzType="car"></span>
+        <span><a routerLink="solicitudesRevision">Solicitudes</a></span>
+      </li>
+
       <!-- 
         <li nz-submenu nzTitle="Usuarios" nzIcon="team">
           <ul>
@@ -77,9 +82,7 @@
           <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
         </span>
 
-        <span class="user-name">{{ nombre }} 
-          {{ idUsuario }}
-        </span>
+        <span class="user-name"> {{ nombre }} </span>
       </div>
     </nz-header>
     <nz-content>

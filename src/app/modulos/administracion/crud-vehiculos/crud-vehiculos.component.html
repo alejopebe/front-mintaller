@@ -22,49 +22,50 @@
 
   <div class="buscador">
     <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-      <input type="text" nz-input placeholder="busca por placa" [(ngModel)]="campoBuscar"/>
+      <input type="text" nz-input placeholder="busca por placa" [(ngModel)]="campoBuscar" />
     </nz-input-group>
     <ng-template #suffixIconButton>
-      <button nz-button nzType="primary" nzSearch (click)="getVehiculoFilter()"><span nz-icon nzType="search"></span></button>
+      <button nz-button nzType="primary" nzSearch (click)="getVehiculoFilter()"><span nz-icon
+          nzType="search"></span></button>
     </ng-template>
   </div>
 </div>
 
-   <nz-table #basicTable [nzData]="listOfData" [nzScroll]="{ x: '400px' }" [nzPageSize]="6">
-      <thead>
-        <tr>
-          <th>Placa</th>
-          <th>Marca</th>
-          <th>Modelo</th>
-          <th>Cilindraje</th>
-          <th>Propietario</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let data of basicTable.data" (click)="clickUser(data)">
-          <td>{{ data.idVehiculo }}</td>
-          <td>{{ data.marca }}</td>
-          <td>{{ data.modelo }}</td>
-          <td>{{ data.cilindraje }}</td>
-          <td>{{ data.usuarioId }}</td>
-          <td>
-            <a class="action" (click)="deleteVehiculo(data.idVehiculo)" nz-tooltip nzTooltipTitle="Eliminar">
-              <span nz-icon nzType="delete" nzTheme="fill"></span>
-            </a>
-            <nz-divider nzType="vertical"></nz-divider>
-            <a class="action" (click)="selectVehiculoEdit(data)" nz-tooltip nzTooltipTitle="Editar">
-              <span nz-icon nzType="edit" nzTheme="fill"></span>
-            </a>
-            <nz-divider nzType="vertical"></nz-divider>
-            <a class="action" (click)="open(data)" nz-tooltip nzTooltipTitle="Ver detalles">
-              <span nz-icon nzType="eye" nzTheme="fill"></span>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </nz-table>
-  
+<nz-table #basicTable [nzData]="listOfData" [nzScroll]="{ x: '400px' }" [nzPageSize]="6">
+  <thead>
+    <tr>
+      <th>Placa</th>
+      <th>Marca</th>
+      <th>Modelo</th>
+      <th>Cilindraje</th>
+      <th>Propietario</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data" (click)="clickUser(data)">
+      <td>{{ data.idVehiculo }}</td>
+      <td>{{ data.marca }}</td>
+      <td>{{ data.modelo }}</td>
+      <td>{{ data.cilindraje }}</td>
+      <td>{{ data.usuarioId }}</td>
+      <td>
+        <a class="action" (click)="deleteVehiculo(data.idVehiculo)" nz-tooltip nzTooltipTitle="Eliminar">
+          <span nz-icon nzType="delete" nzTheme="fill"></span>
+        </a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a class="action" (click)="selectVehiculoEdit(data)" nz-tooltip nzTooltipTitle="Editar">
+          <span nz-icon nzType="edit" nzTheme="fill"></span>
+        </a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a class="action" (click)="open(data)" nz-tooltip nzTooltipTitle="Ver detalles">
+          <span nz-icon nzType="eye" nzTheme="fill"></span>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+
 
 
 <!-- Modal -->
@@ -77,17 +78,32 @@
 
   <ng-template #modalContent>
 
-    <div class="cls-form" [formGroup]="formVehiculo">
+    <form class="cls-form" [formGroup]="formVehiculo">
 
       <div>
         <label for="">Placa</label>
-        <input type="text" class="input"  placeholder="ABC123" formControlName="idVehiculo"/>
+        <input type="text" class="input" placeholder="ABC123" formControlName="idVehiculo" />
       </div>
+
+      <div>
+        <label for="">Propietario</label>
+        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Selecciona una propietario" [(ngModel)]="currentPro" formControlName="usuarioId">
+          <nz-option *ngFor="let placa of remoteData" [nzLabel]="placa.idUsuario +' - '+ placa.nombre" [nzValue]="placa.idUsuario">
+          </nz-option>
+        </nz-select>
+      </div>
+
+      <!-- <div>
+        <label for="">ID propietario </label>
+        <input type="text" autocomplete="off" class="input" formControlName="usuarioId" />
+      </div> -->
+
+
 
       <div>
         <label for="">tipo</label>
         <!-- <input type="text" class="input" formControlName="tipo"/> -->
-        <nz-select [(ngModel)]="currentTipo" formControlName="tipo">
+        <nz-select [(ngModel)]="currentTipo" formControlName="tipo" nzPlaceHolder="Selecciona un tiopo">
           <nz-option *ngFor="let tipo of tiposVehiculo" [nzValue]="tipo.id" [nzLabel]="tipo.nombre"></nz-option>
         </nz-select>
       </div>
@@ -101,42 +117,39 @@
 
       <div>
         <label for="">Modelo</label>
-        <input type="number" class="input" formControlName="modelo"/>
+        <input type="number" class="input" formControlName="modelo" min="1999" max="2022"/>
       </div>
 
       <div>
         <label for="">Cilindraje</label>
-        <input type="number"  autocomplete="off" class="input" formControlName="cilindraje"/>
+        <input type="number" autocomplete="off" class="input" formControlName="cilindraje" />
       </div>
 
       <div>
         <label for="">Numero pasajeros</label>
-        <input type="string"  autocomplete="off" class="input" formControlName="numeroPasajeros"/>
+        <input type="string" autocomplete="off" class="input" formControlName="numeroPasajeros" />
       </div>
 
       <div>
         <label for="">País origen</label>
-        <input type="text"  autocomplete="off" class="input" formControlName="paisOrigen"/>
-      </div>
-
-      <div>
-        <label for="">ID propietario </label>
-        <input type="text"  autocomplete="off" class="input" formControlName="usuarioId"/>
+        <input type="text" autocomplete="off" class="input" formControlName="paisOrigen" />
       </div>
 
       <div id="asd">
         <label for="">Descripción</label>
-        <textarea name=""  class="input" formControlName="descripcion"></textarea>
+        <textarea name="" class="input" formControlName="descripcion"></textarea>
       </div>
 
-    </div>
+    </form>
 
   </ng-template>
 
   <ng-template #modalFooter>
     <button nz-button nzType="default" (click)="handleCancel()">Cancelar</button>
-    <button *ngIf="formMode == 'adicion'" nz-button nzType="primary" (click)="saveVehicle()" [nzLoading]="isConfirmLoading">Agregar</button>
-    <button *ngIf="formMode == 'edicion'" nz-button nzType="primary" (click)="editVehiculo()" [nzLoading]="isConfirmLoading">Editar</button>
+    <button *ngIf="formMode == 'adicion'" nz-button nzType="primary" (click)="saveVehicle()"
+      [nzLoading]="isConfirmLoading">Agregar</button>
+    <button *ngIf="formMode == 'edicion'" nz-button nzType="primary" (click)="editVehiculo()"
+      [nzLoading]="isConfirmLoading">Editar</button>
   </ng-template>
 </nz-modal>
 

@@ -30,17 +30,16 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 
-
-
 import { LayoutComponent } from './layout/layout.component';
 
 import { CrudUsuariosComponent } from './modulos/administracion/crud-usuarios/crud-usuarios.component';
 import { CrudVehiculosComponent } from './modulos/administracion/crud-vehiculos/crud-vehiculos.component';
-import { LoginComponent } from './modulos/administracion/login/login.component';
+import { LoginComponent } from './modulos/auth/login/login.component';
 import { NzCalendarModule } from 'ng-zorro-antd/calendar';
 import { MisVehiculosComponent } from './modulos/administracion/mis-vehiculos/mis-vehiculos.component';
 import { RevisionesComponent } from './modulos/administracion/revisiones/revisiones.component';
 import { InicioComponent } from './modulos/administracion/us-inicio/inicio.component';
+import { AdRevisionesComponent } from './modulos/administracion/ad-revisiones/ad-revisiones.component';
 //import { SignupComponent } from './auth/signup/signup.component';
 // import { PagesComponent } from './pages/jefe-operaciones/pages.component';
 // import { UsuarioComponent } from './pages/usuario/usuario.component';
@@ -58,10 +57,11 @@ registerLocaleData(es);
     // UserLayoutComponent,
     CrudUsuariosComponent,
     CrudVehiculosComponent,
+    AdRevisionesComponent,
 
     // PagesComponent,
     // UsuarioComponent,
-    //LoginComponent,
+    LoginComponent,
     MisVehiculosComponent,
     RevisionesComponent,
     InicioComponent

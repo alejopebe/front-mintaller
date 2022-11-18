@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AuthRoutingModule } from './auth-routing.module';
-import { LoginComponent } from '../administracion/login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
@@ -19,7 +18,6 @@ import { CerrarSesionComponent } from './cerrar-sesion/cerrar-sesion.component';
 
 @NgModule({
   declarations: [
-    LoginComponent,
     RegisterComponent,
     ResetPasswordComponent,
     ChangePasswordComponent,

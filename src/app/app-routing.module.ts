@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CerrarSesionComponent } from './modulos/auth/cerrar-sesion/cerrar-sesion.component';
-
-// import { LoginComponent } from './auth/login/login.component';
-// import { SignupComponent } from './auth/signup/signup.component';
+import { LoginComponent } from './modulos/auth/login/login.component';
+import { RegisterComponent } from './modulos/auth/register/register.component';
 
 const routes: Routes = [
 
   {path: '', redirectTo: 'seguridad', pathMatch: 'full'},
-  // {path: 'login', component: LoginComponent},
-  // {path: 'register', component: SignupComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent},
 
   {
     path: 'cerrarSesion', component: CerrarSesionComponent

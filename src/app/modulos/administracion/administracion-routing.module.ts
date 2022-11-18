@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from 'src/app/layout/layout.component';
+import { AdRevisionesComponent } from './ad-revisiones/ad-revisiones.component';
 import { AgendarRevisionComponent } from './agendar-revision/agendar-revision.component';
 import { CalenadarioComponent } from './calenadario/calenadario.component';
 import { CrudUsuariosComponent } from './crud-usuarios/crud-usuarios.component';
@@ -18,10 +19,11 @@ const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent},
       { path: 'calendario', component: CalenadarioComponent},
       { path: 'misvehiculos', component: MisVehiculosComponent},
-      { path: 'agendarrevision', component: AgendarRevisionComponent},
-      
+      { path: 'solicitudesRevision', component: AdRevisionesComponent},
+
+    
       { path: 'revisiones', component: RevisionesComponent},
-      {path: '', redirectTo: 'dashboard', pathMatch: 'full'}
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full'}
     ]
   },
 

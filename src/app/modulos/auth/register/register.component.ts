@@ -1,6 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RequestBackendService } from 'src/app/servicios/request-backend.service';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2'
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'bottom-end',
+  showConfirmButton: false,
+  timer:5000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
 
 @Component({
   selector: 'app-register',
@@ -10,12 +24,13 @@ import { RequestBackendService } from 'src/app/servicios/request-backend.service
 export class RegisterComponent implements OnInit {
 
   registroUsuario: FormGroup = new FormGroup({});
-  
+
 
   constructor(
     private requestBack: RequestBackendService,
-    private fb: FormBuilder
-  ) { 
+    private fb: FormBuilder,
+    private router: Router
+  ) {
 
     this.registroUsuario = this.fb.group({
       idUsuario: '',
@@ -47,6 +62,18 @@ export class RegisterComponent implements OnInit {
         //const cloneList = JSON.parse(JSON.stringify(this.listOfData));
         //cloneList.unshift(data);
         //this.listOfData = cloneList;
+
+        // alert mensaje
+        Toast.fire({
+          icon: 'success',
+          title: 'Registro exitoso, revisa tu correo.'
+        })
+
+        setTimeout( () => {
+          this.router.navigate(['/']);
+        }, 6000);
+
+
       },
       error: (error) => {
         console.log('error: ' + error);
@@ -56,7 +83,7 @@ export class RegisterComponent implements OnInit {
         console.log('complete');
       },
     });
-  }  
+  }
 
 
 

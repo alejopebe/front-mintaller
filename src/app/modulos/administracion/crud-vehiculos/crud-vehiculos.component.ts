@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { RequestBackendService } from '../../../servicios/request-backend.service';
 import Swal from 'sweetalert2'
 
-
 interface Vehiculo {
   idVehiculo: string;
   tipo: string,
@@ -64,14 +63,20 @@ export class CrudVehiculosComponent {
 
   listOfData: Vehiculo[] = [];
 
+  remoteData: any = [];
+  currentPro = ''
+
   formVehiculo: FormGroup = new FormGroup({});
+
+
 
 
   constructor(private requestBack: RequestBackendService, private fb: FormBuilder) {
 
     this.getVehiculos();
     this.getTipoVehiculo();
-    this.getMarcaVehiculo()
+    this.getMarcaVehiculo();
+    this.getUsuarios();
 
 
     this.formVehiculo = this.fb.group({
@@ -95,6 +100,18 @@ export class CrudVehiculosComponent {
 
       (data) => {
         this.listOfData = data;
+      },
+      (error) => {
+        console.log('error: ' + error)
+        this.listOfData = [];
+      })
+  }
+
+  getUsuarios() {
+    this.requestBack.getData('usuarios').subscribe(
+
+      (data) => {
+        this.remoteData = data
       },
       (error) => {
         console.log('error: ' + error)
@@ -138,7 +155,6 @@ export class CrudVehiculosComponent {
 
   editVehiculo(): void {
     const vehiculo = this.formVehiculo.getRawValue();
-
     this.requestBack.updateData('vehiculos', vehiculo.idVehiculo, vehiculo).subscribe(
       {
         next: (data) => {
@@ -234,7 +250,7 @@ export class CrudVehiculosComponent {
     this.requestBack.getData('tipo-vehiculos').subscribe({
       next: (data) => {
         this.tiposVehiculo = data;
-        this.currentTipo = data[0].id;
+        this.currentTipo = data;
         //console.log(data)
       },
       error: (error) => {
@@ -268,7 +284,7 @@ export class CrudVehiculosComponent {
 
   //::::: Selecciona un vehículo de la tabla
   clickUser(vehiculo: Vehiculo): void {
-    console.log(vehiculo);
+
     this.currentVehicle = JSON.parse(JSON.stringify(vehiculo));
   }
 
@@ -276,6 +292,11 @@ export class CrudVehiculosComponent {
   selectVehiculoEdit(user: any): void {
     this.formMode = 'edicion';
     this.formVehiculo.patchValue(user);
+
+    this.currentPro = this.formVehiculo.controls['usuarioId'].value;
+    this.currentMarca = this.formVehiculo.controls['marca'].value;
+    this.currentTipo = this.formVehiculo.controls['tipo'].value;
+
     this.isVisible = true;
   }
 
@@ -313,5 +334,4 @@ export class CrudVehiculosComponent {
   close(): void {
     this.visible = false;
   }
-
 }
